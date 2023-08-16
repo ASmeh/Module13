@@ -21,54 +21,124 @@ public class Task1 {
     private static final String TEST_URL = "https://jsonplaceholder.typicode.com/users";
 
     public static void main(String[] args)throws IOException {
+        try {
+            // Створення нового об'єкта
+            String newUserJson = "{\"name\": \"John Doe\", \"username\": \"johndoe\"}";
+            String createdUserJson = createObject("https://jsonplaceholder.typicode.com/users", newUserJson);
+            System.out.println("Створено об'єкт: " + createdUserJson);
 
-        //створення обьекту
-        sendPOST();
-        //оновлення об'єкту
+            // Оновлення об'єкту
+            String updatedUserJson = "{\"id\": 1, \"name\": \"Updated Name\", \"username\": \"updatedusername\"}";
+            String updatedUserResponse = updateObject("https://jsonplaceholder.typicode.com/users/1", updatedUserJson);
+            System.out.println("Оновлено об'єкт: " + updatedUserResponse);
 
-    }
-    private static void sendPOST() throws IOException {
-        URL url = new URL(TEST_URL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        OutputStream os = connection.getOutputStream();
-        os.write(Files.readAllBytes(new File("D:\\Practice\\java_goit\\Module13\\src\\main\\resources\\users.json").toPath()));
-        os.flush();
-        os.close();
+            // Видалення об'єкту
+            int deleteStatus = deleteObject("https://jsonplaceholder.typicode.com/users/1");
+            System.out.println("Статус видалення об'єкту: " + deleteStatus);
 
-        int responseCode = connection.getResponseCode();
-        System.out.println("POST response code: " + responseCode);
-        if (responseCode == HttpURLConnection.HTTP_CREATED) {
-            BufferedReader in =
-                    new BufferedReader(
-                            new InputStreamReader(connection.getInputStream()));
-            StringBuffer response = new StringBuffer();
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            System.out.println(response.toString());
-        } else {
-            System.out.println("POST request not worked");
+            // Отримання інформації про всіх користувачів
+            String usersJson = getUsers("https://jsonplaceholder.typicode.com/users");
+            System.out.println("Всі користувачі: " + usersJson);
+
+            // Отримання інформації про користувача за id
+            String userJson = getUserById("https://jsonplaceholder.typicode.com/users/1");
+            System.out.println("Користувач з id 1: " + userJson);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-    private static void sendPUT() throws IOException {
-        URL url = new URL(TEST_URL);
-        HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-        httpCon.setDoOutput(true);
-        httpCon.setRequestMethod("PUT");
-        httpCon.connect();
+    public static String createObject(String url, String json) throws Exception {
+        URL apiUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
+        connection.getOutputStream().write(json.getBytes());
 
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_CREATED) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            return response.toString();
+        } else {
+            throw new Exception("Створення об'єкту не вдалося. Код відповіді: " + responseCode);
+        }
     }
-    private static void sendDELETE() throws IOException {
-        URL url = new URL(TEST_URL);
-        HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-        httpCon.setDoOutput(true);
-        httpCon.setRequestProperty(
-                "Content-Type", "application/x-www-form-urlencoded" );
-        httpCon.setRequestMethod("DELETE");
-        httpCon.connect();
+
+    public static String updateObject(String url, String json) throws Exception {
+        URL apiUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+        connection.setRequestMethod("PUT");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setDoOutput(true);
+        connection.getOutputStream().write(json.getBytes());
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            return response.toString();
+        } else {
+            throw new Exception("Оновлення об'єкту не вдалося. Код відповіді: " + responseCode);
+        }
+    }
+
+    public static int deleteObject(String url) throws Exception {
+        URL apiUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+        connection.setRequestMethod("DELETE");
+
+        int responseCode = connection.getResponseCode();
+        return responseCode;
+    }
+
+    public static String getUsers(String url) throws Exception {
+        URL apiUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            return response.toString();
+        } else {
+            throw new Exception("Помилка при отриманні інформації про всіх користувачів. Код відповіді: " + responseCode);
+        }
+    }
+
+    public static String getUserById(String url) throws Exception {
+        URL apiUrl = new URL(url);
+        HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+            return response.toString();
+        } else {
+            throw new Exception("Помилка при отриманні інформації про користувача. Код відповіді: " + responseCode);
+        }
     }
 }
