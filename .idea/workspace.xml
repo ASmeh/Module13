@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="80dd447c-00e7-42ea-aa47-3e3d6d2bdb11" name="Changes" comment="Init commit">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Task3.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Task2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Task2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-1-post-10-comments.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,7 +47,7 @@
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Task3">
+  <component name="RunManager" selected="Application.Task2">
     <configuration name="Task1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.Task1" />
       <module name="Module13_2" />
@@ -87,8 +89,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Task3" />
         <item itemvalue="Application.Task2" />
+        <item itemvalue="Application.Task3" />
         <item itemvalue="Application.Task1" />
       </list>
     </recent_temporary>
@@ -101,7 +103,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1691953804648</updated>
-      <workItem from="1691953806806" duration="15572000" />
+      <workItem from="1691953806806" duration="22408000" />
     </task>
     <servers />
   </component>
@@ -128,13 +130,18 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Task2.java</url>
-          <line>30</line>
+          <line>33</line>
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/Task3.java</url>
           <line>19</line>
           <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/Task2.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

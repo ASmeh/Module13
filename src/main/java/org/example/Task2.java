@@ -7,6 +7,9 @@ https://jsonplaceholder.typicode.com/users/1/posts Останнім вважає
 https://jsonplaceholder.typicode.com/posts/10/comments
 
 Файл повинен називатись user-X-post-Y-comments.json, де Х - id користувача, Y - номер посту.*/
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -37,7 +40,6 @@ public class Task2 {
     }
     private static JSONArray getPostsByUser(int userId) throws IOException {
         String url = "https://jsonplaceholder.typicode.com/users/" + userId + "/posts";
-        //String url2 = "https://jsonplaceholder.typicode.com/posts?userId=1";
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
         HttpGet httpGet = new HttpGet(url);
@@ -45,13 +47,6 @@ public class Task2 {
         HttpEntity httpEntity = httpResponse.getEntity();
         String json = EntityUtils.toString(httpEntity);
 
-        /*HttpGet httpGet2 = new HttpGet(url2);
-        HttpResponse httpResponse2 = httpClient.execute(httpGet);
-        HttpEntity httpEntity2 = httpResponse2.getEntity();
-        String json2 = EntityUtils.toString(httpEntity2);
-        if(json.equals(json2)) {
-            int a = 3;
-        }*/
         return new JSONArray(json);
     }
 
@@ -67,8 +62,8 @@ public class Task2 {
     private static void writeCommentsToFile(int postID, int userId, JSONArray jsonArray) throws IOException {
         String fileName = "user-" + userId + "-post-" + postID + "-comments.json";
         FileWriter fileWriter = new FileWriter(fileName);
-        jsonArray.write(fileWriter);
-        //fileWriter.write(jsonArray.toString());
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        gson.toJson(jsonArray,fileWriter);
         fileWriter.close();
     }
 }
